@@ -1,0 +1,26 @@
+.parent-container-1{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.parent-container-1 div{
+    width: 50%;
+    background-color: aqua;
+    border: aqua;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #dadadac7;
+}
+
+/* .parent-container-1 .child-container-1{
+    background-color: aqua;
+}
+
+.parent-container-1 .child-container-2{
+    background-color: aquamarine;
+} */

@@ -1,3 +1,19 @@
-.ul{
-    list-style-type: circle;
+.ul {
+  list-style-type: circle;
+}
+
+.parent-container-1 {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.parent-container-1 .child-1 {
+  width: 30%;
+  background-color: aqua;
+}
+
+.parent-container-1 .child-2 {
+  width: 50%;
+  background-color: aquamarine;
 }

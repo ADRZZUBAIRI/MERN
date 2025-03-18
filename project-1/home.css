@@ -1,0 +1,135 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fdf7eb; /* Light Beige */
+    color: #0d0d0d;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 100px;
+}
+
+/* Left Content */
+.hero-content {
+    max-width: 50%;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    color: #012970; /* Dark Blue */
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    left: 50px;
+    top: 20%;
+}
+
+.social-icons a img {
+    width: 20px;
+    height: 20px;
+    filter: contrast(0.7);
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover img {
+    transform: scale(1.1);
+}
+
+/* CTA Button */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e09036;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #cc7a2a;
+}
+
+/* Right Image
+.hero-image img {
+    width: 400px;
+    border-radius: 20px;
+} */
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.nav-bar {
+  background-color: #f4c589; /* Light Orange */
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid #e0a45e; /* Border matching the style */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline-block;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+.contact-btn {
+  background-color: #e09036; /* Darker Orange */
+  padding: 10px 15px;
+  border-radius: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.contact-btn:hover {
+  background-color: #cc7a2a; /* Darker shade on hover */
+}
+
+.hero-image img {
+    width: 400px; 
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+}

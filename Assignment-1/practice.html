@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Elements Practice</title>
+    <link rel="stylesheet" href="practice.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>HTML Elements Practice Page</h1>
+      <p>This page contains various HTML elements for practice.</p>
+    </header>
+
+    <section>
+      <h2>Text Elements</h2>
+      <br />
+      <p>This is a paragraph.</p>
+      <br />
+      <strong>This is bold text.</strong><br />
+      <em>This is italic text.</em><br />
+      <u>This is underlined text.</u><br />
+      <del>This is deleted text.</del><br />
+      <mark>This is highlighted text.</mark><br />
+      <blockquote>This is a blockquote.</blockquote>
+      <br />
+      <code>This is inline code.</code><br />
+      <pre>This is preformatted text.</pre>
+      <br />
+    </section>
+
+    <section>
+      <h2>Lists</h2>
+      <h3>Ordered List</h3>
+      <ol>
+        <li>First item</li>
+        <li>Second item</li>
+        <li>Third item</li>
+      </ol>
+
+      <h3>Unordered List</h3>
+      <ul>
+        <li>Item A</li>
+        <li>Item B</li>
+        <li>Item C</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tables</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John</td>
+            <td>25</td>
+            <td>USA</td>
+          </tr>
+          <tr>
+            <td>Jane</td>
+            <td>28</td>
+            <td>UK</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Forms</h2>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
+
+        <label for="gender">Gender:</label>
+        <select id="gender">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+
+        <label>Choose your interests:</label>
+        <input type="checkbox" id="coding" /><label for="coding">Coding</label>
+        <input type="checkbox" id="sports" /><label for="sports">Sports</label>
+
+        <label>Select your age:</label>
+        <input type="radio" name="age" value="under_18" /> Under 18
+        <input type="radio" name="age" value="18_plus" /> 18 and above
+
+        <label for="message">Message:</label>
+        <textarea
+          id="message"
+          rows="4"
+          placeholder="Enter your message"
+        ></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Media Elements</h2>
+      <img src="https://via.placeholder.com/150" alt="Sample Image" />
+      <video controls width="300">
+        <source src="sample.mp4" type="video/mp4" />
+        Your browser does not support video.
+      </video>
+      <audio controls>
+        <source src="sample.mp3" type="audio/mp3" />
+        Your browser does not support audio.
+      </audio>
+    </section>
+
+    <section>
+      <h2>Links & Buttons</h2>
+      <a href="https://www.google.com" target="_blank">Visit Google</a>
+      <button onclick="alert('Button Clicked!')">Click Me</button>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 HTML Practice Page. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

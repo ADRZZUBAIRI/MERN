@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Sign Up</title>
+    <link rel="stylesheet" href="facebook.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">facebook</h1>
+        <div class="signup-box">
+            <h2>Create a new account</h2>
+            <p>It's quick and easy.</p>
+            <hr>
+
+            <form>
+                <div class="name-fields">
+                    <input type="text" placeholder="First name" required>
+                    <input type="text" placeholder="Surname" required>
+                </div>
+
+                <label class="label">Date of birth <span>?</span></label>
+                <div class="dob">
+                    <select>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                    </select>
+                    <select>
+                        <option>Mar</option>
+                        <option>Apr</option>
+                        <option>May</option>
+                    </select>
+                    <select>
+                        <option>2025</option>
+                        <option>2024</option>
+                        <option>2023</option>
+                    </select>
+                </div>
+
+                <label class="label">Gender <span>?</span></label>
+                <div class="gender">
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                    <label><input type="radio" name="gender" value="male"> Male</label>
+                    <label><input type="radio" name="gender" value="custom"> Custom</label>
+                </div>
+
+                <input type="email" placeholder="Mobile number or email address" required>
+                <input type="password" placeholder="New password" required>
+
+                <p class="info-text">
+                    People who use our service may have uploaded your contact information to Facebook. <a href="#">Learn more</a>.
+                </p>
+                <p class="terms">
+                    By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookies Policy</a>.
+                    You may receive SMS notifications from us and can opt out at any time.
+                </p>
+
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+
+            <p class="login-link">Already have an account? <a href="#">Log in</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Dashboard</h1>
+        <nav>
+          <ul>
+            <li><a href="signin.html">Sign Out</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-container">
+        <h2>Welcome, User!</h2>
+        <p>You are now logged in. Here are your tasks:</p>
+
+        <!-- Task List -->
+        <div class="task-section">
+          <h3>Your Tasks</h3>
+          <ul class="task-list">
+            <li>✅ Complete the project documentation</li>
+            <li>🚀 Work on UI improvements</li>
+            <li>📝 Prepare client report</li>
+            <li>🔄 Review feedback and implement changes</li>
+            <li>📅 Schedule meeting with the team</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Logged-in Time Section -->
+    <footer>
+      <p id="login-time"></p>
+    </footer>
+
+    <script>
+      // Display current date and time in the footer
+      const loginTime = new Date().toLocaleString();
+      document.getElementById("login-time").innerText =
+        "Logged in at: " + loginTime;
+    </script>
+  </body>
+</html>

@@ -5,23 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins"
+    />
   </head>
   <body>
     <header>
-      <div class="container">
-        <h1>MyApp</h1>
-        <nav>
-          <ul>
-            <li><a href="signin.html">Sign In</a></li>
-            <li><a href="signup.html" class="active">Sign Up</a></li>
-          </ul>
-        </nav>
-      </div>
+      <nav class="navbar">
+        <div class="logo"><a href="index.html">MyWebsite</a></div>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="auth-buttons">
+          <a href="signin.html" class="btn">Sign In</a>
+          <a href="signup.html" class="btn btn-signup">Sign Up</a>
+        </div>
+      </nav>
     </header>
     <main>
       <div class="form-container">
         <h2>Sign Up</h2>
-        <form action="dashboard.html" method="GET">
+        <form action="signin.html" method="GET" id="signupForm">
           <label for="fullname">Full Name</label>
           <input
             type="text"
@@ -50,5 +60,8 @@
         </form>
       </div>
     </main>
+    <footer>
+      <p>&copy; 2025 MyWebsite. All rights reserved.</p>
+    </footer>
   </body>
 </html>

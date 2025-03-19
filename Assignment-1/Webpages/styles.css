@@ -1,0 +1,383 @@
+/* Global Reset & Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* =============================
+   Header & Hero Section (Home)
+   ============================= */
+header {
+  background: linear-gradient(135deg, #1877f2, #4285f4);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+header .hero {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+header .hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+header .hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+header .hero .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff6347;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+header .hero .btn:hover {
+  background-color: #e5533d;
+}
+
+/* =============================
+   Container & Sections
+   ============================= */
+/* Container for Main Content */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* General Section Styling */
+section {
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section h1 {
+  margin-bottom: 20px;
+}
+
+/* Features Section (Home) */
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin: 40px 0;
+}
+
+.features .feature {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.features .feature h2 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+/* About & Services Images */
+.about-section img,
+.services-section img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Services Section */
+.services-section .service {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.services-section .service:last-child {
+  border-bottom: none;
+}
+
+/* Contact Form (Generic) */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-form .btn {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-form .btn:hover {
+  background-color: #1558b0;
+}
+
+/* =============================
+   Navbar (Combined & Unified)
+   ============================= */
+.navbar {
+  display: flex;
+  flex-wrap: nowrap; /* Single row on large screens */
+  justify-content: space-between;
+  align-items: center;
+  background: #ff6b35; /* Deep Orange */
+  padding: 15px 50px;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Logo within Navbar */
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Navbar Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  text-decoration: underline;
+}
+
+/* Authentication Buttons */
+.auth-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.btn {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 2px solid white;
+  transition: 0.3s;
+}
+
+.btn-signup {
+  background: white;
+  color: #ff6b35;
+}
+
+.btn:hover {
+  background: white;
+  color: #ff6b35;
+}
+
+.btn-signup:hover {
+  background: #d9531e;
+  color: white;
+}
+
+/* Responsive Navbar: Wrap only on small screens */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+  }
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .auth-buttons {
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+/* =============================
+   Footer
+   ============================= */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+/* =============================
+   Form & Dashboard (Additional Styles)
+   ============================= */
+
+/* Form Container */
+.form-container {
+  background-color: #fff;
+  width: 400px;
+  max-width: 90%;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #007bff;
+  font-size: 24px;
+}
+
+/* Form Elements within Form Container */
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
+  display: block;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-container input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.form-container input:focus {
+  border-color: #007bff;
+}
+
+/* Form Container Button */
+.form-container button {
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  background-color: #fff;
+  width: 80%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container h2 {
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+/* Task List Styles */
+.task-section {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.task-section h3 {
+  font-size: 20px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+.task-list li {
+  background: #f8f9fa;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border-left: 4px solid #007bff;
+  font-size: 16px;
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  text-align: left;
+}
+
+/* Responsive Design for Form Container */
+@media (max-width: 480px) {
+  .form-container {
+    width: 90%;
+  }
+}

@@ -1,0 +1,15 @@
+.heading{
+    font-size: medium;
+}
+
+h1.heading{
+    color: red;
+    font-size: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.heading-2{
+    color: blue;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}

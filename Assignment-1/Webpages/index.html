@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyWebsite - Home</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="logo"><a href="index.html">MyWebsite</a></div>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="auth-buttons">
+          <a href="signin.html" class="btn">Sign In</a>
+          <a href="signup.html" class="btn btn-signup">Sign Up</a>
+        </div>
+      </nav>
+      <!-- Hero Section -->
+      <div class="hero">
+        <h1>Welcome to MyWebsite</h1>
+        <p>Your trusted partner for innovative solutions.</p>
+        <a href="services.html" class="btn">Our Services</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Features Section -->
+      <section class="features">
+        <div class="feature">
+          <h2>Quality</h2>
+          <p>
+            We deliver high-quality products and services that exceed
+            expectations.
+          </p>
+        </div>
+        <div class="feature">
+          <h2>Innovation</h2>
+          <p>We harness the latest technologies to stay ahead in the market.</p>
+        </div>
+        <div class="feature">
+          <h2>Support</h2>
+          <p>
+            Our support team is available 24/7 to help you with any challenges.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 MyWebsite. All rights reserved.</p>
+    </footer>
+
+    <script>
+// Function to update the navbar based on login status
+function updateNavbar() {
+  const authButtons = document.querySelector('.auth-buttons');
+  // Check if user is logged in (you can set "loggedIn" in localStorage upon sign in)
+  const loggedIn = localStorage.getItem('loggedIn');
+  
+  if (loggedIn === 'true') {
+    // Replace the auth buttons with a Logout button
+    authButtons.innerHTML = '<a href="#" class="btn" id="logoutBtn">Logout</a>';
+  } else {
+    // Otherwise, show Sign In and Sign Up buttons
+    authButtons.innerHTML = `
+      <a href="signin.html" class="btn">Sign In</a>
+      <a href="signup.html" class="btn btn-signup">Sign Up</a>
+    `;
+  }
+}
+
+// Listen for logout clicks and update state
+document.addEventListener("DOMContentLoaded", function() {
+  updateNavbar();
+  
+  document.body.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'logoutBtn') {
+      // Remove the login flag
+      localStorage.removeItem('loggedIn');
+      updateNavbar();
+      alert('You have logged out.');
+      // Optionally, redirect to the homepage:
+      // window.location.href = 'index.html';
+    }
+  });
+});
+</script>
+
+
+  </body>
+</html>

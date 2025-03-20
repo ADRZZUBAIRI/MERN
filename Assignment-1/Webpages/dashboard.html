@@ -15,18 +15,30 @@
       <nav class="navbar">
         <div class="logo"><a href="index.html">MyWebsite</a></div>
 
-        <ul class="nav-links">
+        <!-- Hamburger -->
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+        <!-- Nav Links -->
+        <ul class="nav-links" id="navLinks">
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
 
+        <!-- Auth Buttons -->
         <div class="auth-buttons">
           <a href="index.html" class="btn">Log Out</a>
         </div>
       </nav>
     </header>
+
+    <script>
+      function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        navLinks.classList.toggle("show");
+      }
+    </script>
 
     <main>
       <div class="dashboard-container">

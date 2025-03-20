@@ -373,7 +373,13 @@ footer {
   overflow-wrap: break-word;
   width: 100%;
   text-align: left;
+  transition: border-left-width 0.3s ease; /* Smooth transition */
 }
+
+.task-list li:hover {
+  border-left-width: 20px; /* Increase border thickness on hover */
+}
+
 
 /* Responsive Design for Form Container */
 @media (max-width: 480px) {

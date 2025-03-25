@@ -10,7 +10,7 @@ function isPrime(n) {
   return true; // Return true if no divisors found
 }
 
-let num = 7;
+let num = parseInt(prompt("Enter a number: "));
 if (isPrime(num)) {
   document.write(num + " is a prime number.");
 } else {

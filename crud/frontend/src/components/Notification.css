@@ -1,0 +1,99 @@
+/* src/components/Notification.css */
+.notification {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-left: 4px solid;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+.notification:hover {
+  transform: scale(1.05);
+}
+
+.notification-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.notification-message {
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: 600; /* Equivalent to font-semibold */
+}
+
+/* Success Notification */
+.notification-success {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.notification-success .notification-icon {
+  color: #28a745;
+}
+
+.notification-success:hover {
+  background-color: #c3e6cb;
+}
+
+/* Info Notification */
+.notification-info {
+  background-color: #e7f3fe;
+  border-color: #17a2b8;
+  color: #0c5460;
+}
+
+.notification-info .notification-icon {
+  color: #17a2b8;
+}
+
+.notification-info:hover {
+  background-color: #d1ecf1;
+}
+
+/* Warning Notification */
+.notification-warning {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+  color: #85640a;
+}
+
+.notification-warning .notification-icon {
+  color: #ffc107;
+}
+
+.notification-warning:hover {
+  background-color: #ffeeba;
+}
+
+/* Error Notification */
+.notification-error {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.notification-error .notification-icon {
+  color: #dc3545;
+}
+
+.notification-error:hover {
+  background-color: #f5c6cb;
+}
+
+/* Container for multiple notifications (optional) */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px; /* Equivalent to space-y-2 */
+}

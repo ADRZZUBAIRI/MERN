@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const studentRoutes = require("./routes/studentRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
+const authRoutes = require("./routes/authRoutes"); // 🔥 New auth routes
 const { logger } = require("./middleware/logger");
 
 const app = express();
@@ -11,8 +12,8 @@ const PORT = 5500;
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // for parsing application/json
-app.use(logger); // Apply the logger middleware to all routes
+app.use(express.json());
+app.use(logger);
 
 // MongoDB Connection
 mongoose
@@ -24,7 +25,8 @@ mongoose
   .catch((err) => console.error("Could not connect to MongoDB:", err));
 
 // Routes
-app.use("/api/students", studentRoutes);
+app.use("/api/auth", authRoutes); // 🔥 Add auth routes
+app.use("/api/students", studentRoutes); // 🔐 Will protect this route in routes file
 app.use("/api/teachers", teacherRoutes);
 
 app.listen(PORT, () => {

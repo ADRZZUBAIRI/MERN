@@ -1,16 +1,26 @@
 // File: backend/controllers/bookController.js
-const Book = require('../models/Book');
+const Book = require("../models/Book");
+const Student = require("../models/Student"); // Needed for validation if student IDs are valid
 
 // @desc    Get all books
 // @route   GET /api/books
-// @access  Private (example, adjust as needed)
+// @access  Private
 const getBooks = async (req, res) => {
   try {
-    const books = await Book.find(); // Add .populate('createdBy', 'username') if you link users
+    // Example: GET /api/books?assignedToStudent=studentId
+    const { assignedToStudent } = req.query;
+    let query = {};
+    if (assignedToStudent) {
+      query.assignedStudents = assignedToStudent; // Find books assigned to a specific student
+    }
+
+    const books = await Book.find(query)
+      .populate("createdBy", "username email") // Populate user info
+      .populate("assignedStudents", "name rollNumber"); // Populate assigned student info
     res.status(200).json(books);
   } catch (error) {
-    console.error('Get Books Error:', error.message);
-    res.status(500).json({ message: 'Server Error' });
+    console.error("Get Books Error:", error.message);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -19,38 +29,57 @@ const getBooks = async (req, res) => {
 // @access  Private
 const getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id);
+    const book = await Book.findById(req.params.id)
+      .populate("createdBy", "username email")
+      .populate("assignedStudents", "name rollNumber");
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
     res.status(200).json(book);
   } catch (error) {
-     console.error('Get Book By ID Error:', error.message);
-     // Handle CastError specifically if ID format is invalid
-     if (error.kind === 'ObjectId') {
-        return res.status(400).json({ message: 'Invalid book ID format' });
-     }
-    res.status(500).json({ message: 'Server Error' });
+    console.error("Get Book By ID Error:", error.message);
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid book ID format" });
+    }
+    res.status(500).json({ message: "Server Error" });
   }
 };
-
 
 // @desc    Create a new book
 // @route   POST /api/books
 // @access  Private
 const createBook = async (req, res) => {
-  const { title, author, isbn, publishedYear } = req.body;
+  const { title, author, isbn, publishedYear, assignedStudents } = req.body;
 
-  // Basic validation
   if (!title || !author || !isbn) {
-    return res.status(400).json({ message: 'Please provide title, author, and ISBN' });
+    return res
+      .status(400)
+      .json({ message: "Please provide title, author, and ISBN" });
   }
 
   try {
-    // Check if ISBN already exists
     const existingBook = await Book.findOne({ isbn });
     if (existingBook) {
-      return res.status(400).json({ message: `Book with ISBN ${isbn} already exists` });
+      return res
+        .status(400)
+        .json({ message: `Book with ISBN ${isbn} already exists` });
+    }
+
+    // Validate assignedStudents if provided
+    if (assignedStudents && assignedStudents.length > 0) {
+      for (const studentId of assignedStudents) {
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+          return res
+            .status(400)
+            .json({ message: `Invalid student ID format: ${studentId}` });
+        }
+        const studentExists = await Student.findById(studentId);
+        if (!studentExists) {
+          return res
+            .status(404)
+            .json({ message: `Student with ID ${studentId} not found.` });
+        }
+      }
     }
 
     const newBook = new Book({
@@ -58,19 +87,23 @@ const createBook = async (req, res) => {
       author,
       isbn,
       publishedYear,
-      // createdBy: req.user.id // If linking to user
+      createdBy: req.user.id, // Set the creator from authenticated user
+      assignedStudents: assignedStudents || [], // Default to empty array if not provided
     });
 
     const savedBook = await newBook.save();
-    res.status(201).json(savedBook);
+    // Populate before sending response
+    const populatedBook = await Book.findById(savedBook._id)
+      .populate("createdBy", "username email")
+      .populate("assignedStudents", "name rollNumber");
+    res.status(201).json(populatedBook);
   } catch (error) {
-    console.error('Create Book Error:', error.message);
-     // Handle Mongoose validation errors
-     if (error.name === 'ValidationError') {
-        const messages = Object.values(error.errors).map(val => val.message);
-        return res.status(400).json({ message: messages.join(', ') });
-     }
-    res.status(500).json({ message: 'Server Error' });
+    console.error("Create Book Error:", error.message);
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((val) => val.message);
+      return res.status(400).json({ message: messages.join(", ") });
+    }
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -78,56 +111,74 @@ const createBook = async (req, res) => {
 // @route   PUT /api/books/:id
 // @access  Private
 const updateBook = async (req, res) => {
-  const { title, author, isbn, publishedYear } = req.body;
+  const { title, author, isbn, publishedYear, assignedStudents } = req.body;
 
   try {
     let book = await Book.findById(req.params.id);
 
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    // Optional: Check if the user updating the book is the one who created it
-    // if (book.createdBy && book.createdBy.toString() !== req.user.id) {
+    // Authorization: Optional - check if the user updating is the creator
+    // if (book.createdBy.toString() !== req.user.id) {
     //   return res.status(401).json({ message: 'User not authorized to update this book' });
     // }
 
-    // Check if the updated ISBN conflicts with another existing book
     if (isbn && isbn !== book.isbn) {
-        const existingBookWithIsbn = await Book.findOne({ isbn: isbn });
-        if (existingBookWithIsbn && existingBookWithIsbn._id.toString() !== req.params.id) {
-            return res.status(400).json({ message: `Another book with ISBN ${isbn} already exists` });
-        }
+      const existingBookWithIsbn = await Book.findOne({ isbn: isbn });
+      if (
+        existingBookWithIsbn &&
+        existingBookWithIsbn._id.toString() !== req.params.id
+      ) {
+        return res
+          .status(400)
+          .json({ message: `Another book with ISBN ${isbn} already exists` });
+      }
     }
 
+    // Validate assignedStudents if provided
+    if (assignedStudents) {
+      // Check if assignedStudents is part of the request
+      if (assignedStudents.length > 0) {
+        for (const studentId of assignedStudents) {
+          if (!mongoose.Types.ObjectId.isValid(studentId)) {
+            return res
+              .status(400)
+              .json({ message: `Invalid student ID format: ${studentId}` });
+          }
+          const studentExists = await Student.findById(studentId);
+          if (!studentExists) {
+            return res
+              .status(404)
+              .json({ message: `Student with ID ${studentId} not found.` });
+          }
+        }
+      }
+      book.assignedStudents = assignedStudents;
+    }
 
-    // Update fields selectively
     book.title = title ?? book.title;
     book.author = author ?? book.author;
     book.isbn = isbn ?? book.isbn;
     book.publishedYear = publishedYear ?? book.publishedYear;
+    // createdBy should not be changed here
 
-    const updatedBook = await book.save(); // Use save to trigger Mongoose middleware/validation if needed
-
-    // Or use findByIdAndUpdate for simpler updates without middleware hooks:
-    // const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
-    //   new: true, // Return the updated document
-    //   runValidators: true, // Run schema validators on update
-    // });
-
-    res.status(200).json(updatedBook);
+    const savedBook = await book.save();
+    const populatedBook = await Book.findById(savedBook._id)
+      .populate("createdBy", "username email")
+      .populate("assignedStudents", "name rollNumber");
+    res.status(200).json(populatedBook);
   } catch (error) {
-    console.error('Update Book Error:', error.message);
-     // Handle Mongoose validation errors
-     if (error.name === 'ValidationError') {
-        const messages = Object.values(error.errors).map(val => val.message);
-        return res.status(400).json({ message: messages.join(', ') });
-     }
-     // Handle CastError specifically if ID format is invalid
-     if (error.kind === 'ObjectId') {
-        return res.status(400).json({ message: 'Invalid book ID format' });
-     }
-    res.status(500).json({ message: 'Server Error' });
+    console.error("Update Book Error:", error.message);
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((val) => val.message);
+      return res.status(400).json({ message: messages.join(", ") });
+    }
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid book ID format" });
+    }
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -139,35 +190,28 @@ const deleteBook = async (req, res) => {
     const book = await Book.findById(req.params.id);
 
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    // Optional: Check if the user deleting the book is the one who created it
-    // if (book.createdBy && book.createdBy.toString() !== req.user.id) {
+    // Authorization: Optional - check if the user deleting is the creator
+    // if (book.createdBy.toString() !== req.user.id) {
     //   return res.status(401).json({ message: 'User not authorized to delete this book' });
     // }
 
-    await book.deleteOne(); // Use deleteOne on the document instance
+    // Note: With the current simplified model, we don't need to update Student's assignedBooks array here.
+    // If Student model had an assignedBooks array, we would need to pull this book's ID from those arrays.
 
-    // Or use findByIdAndDelete:
-    // await Book.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({ message: 'Book removed successfully', id: req.params.id });
+    await book.deleteOne();
+    res
+      .status(200)
+      .json({ message: "Book removed successfully", id: req.params.id });
   } catch (error) {
-    console.error('Delete Book Error:', error.message);
-     // Handle CastError specifically if ID format is invalid
-     if (error.kind === 'ObjectId') {
-        return res.status(400).json({ message: 'Invalid book ID format' });
-     }
-    res.status(500).json({ message: 'Server Error' });
+    console.error("Delete Book Error:", error.message);
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid book ID format" });
+    }
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
-
-module.exports = {
-  getBooks,
-  getBookById,
-  createBook,
-  updateBook,
-  deleteBook,
-};
+module.exports = { getBooks, getBookById, createBook, updateBook, deleteBook };

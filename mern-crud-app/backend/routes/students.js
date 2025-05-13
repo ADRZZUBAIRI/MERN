@@ -1,18 +1,13 @@
+// File: backend/routes/students.js
 const express = require("express");
-const {
-  getStudents,
-  getStudentById,
-  createStudent,
-  updateStudent,
-  deleteStudent,
-} = require("../controllers/studentController");
+const studentCtrl = require("../controllers/studentController"); // Use a different alias
 const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.use(protect);
-router.route("/").get(getStudents).post(createStudent);
+router.route("/").get(studentCtrl.getStudents).post(studentCtrl.createStudent);
 router
   .route("/:id")
-  .get(getStudentById)
-  .put(updateStudent)
-  .delete(deleteStudent);
+  .get(studentCtrl.getStudentById)
+  .put(studentCtrl.updateStudent)
+  .delete(studentCtrl.deleteStudent);
 module.exports = router;

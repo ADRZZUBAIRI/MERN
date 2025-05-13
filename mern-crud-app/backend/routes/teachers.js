@@ -1,17 +1,14 @@
 // File: backend/routes/teachers.js
-const express = require('express');
-const {
-  getTeachers,
-  getTeacherById,
-  getStudentsForTeacher, // Import new controller
-  createTeacher,
-  updateTeacher,
-  deleteTeacher
-} = require('../controllers/teacherController');
-const { protect } = require('../middleware/authMiddleware');
+const express = require("express");
+const teacherCtrl = require("../controllers/teacherController"); // Use a different alias
+const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.use(protect);
-router.route('/').get(getTeachers).post(createTeacher);
-router.route('/:id').get(getTeacherById).put(updateTeacher).delete(deleteTeacher);
-router.route('/:id/students').get(getStudentsForTeacher); // New route
+router.route("/").get(teacherCtrl.getTeachers).post(teacherCtrl.createTeacher);
+router
+  .route("/:id")
+  .get(teacherCtrl.getTeacherById)
+  .put(teacherCtrl.updateTeacher)
+  .delete(teacherCtrl.deleteTeacher);
+router.route("/:id/students").get(teacherCtrl.getStudentsForTeacher);
 module.exports = router;

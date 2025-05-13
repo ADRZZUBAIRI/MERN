@@ -1,9 +1,8 @@
 // File: backend/controllers/authController.js
-// Handles user registration and login logic
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const dotenv = require('dotenv');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -12,57 +11,37 @@ dotenv.config();
 // @access  Public
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-
   try {
-    // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ message: 'User already exists with this email' });
+      return res
+        .status(400)
+        .json({ message: "User already exists with this email" });
     }
     user = await User.findOne({ username });
-     if (user) {
-      return res.status(400).json({ message: 'Username is already taken' });
+    if (user) {
+      return res.status(400).json({ message: "Username is already taken" });
     }
-
-    // Create new user instance
-    user = new User({
-      username,
-      email,
-      password,
-    });
-
-    // Hash password
+    user = new User({ username, email, password });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-
-    // Save user to database
     await user.save();
-
-    // Create JWT payload
-    const payload = {
-      id: user.id, // Use user.id (mongoose adds this virtual getter)
-    };
-
-    // Sign JWT token
+    const payload = { id: user.id };
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }, // Token expires in 1 hour
+      { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.status(201).json({ // 201 Created status
+        res.status(201).json({
           token,
-          user: { // Send back some user info (excluding password)
-            id: user.id,
-            username: user.username,
-            email: user.email
-          }
+          user: { id: user.id, username: user.username, email: user.email },
         });
       }
     );
   } catch (err) {
-    console.error('Registration Error:', err.message);
-    res.status(500).send('Server error during registration');
+    console.error("Registration Error:", err.message, err.stack);
+    res.status(500).send("Server error during registration");
   }
 };
 
@@ -71,45 +50,33 @@ const registerUser = async (req, res) => {
 // @access  Public
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
   try {
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid Credentials (email)' });
+      return res.status(400).json({ message: "Invalid Credentials (email)" });
     }
-
-    // Compare entered password with hashed password in DB
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid Credentials (password)' });
+      return res
+        .status(400)
+        .json({ message: "Invalid Credentials (password)" });
     }
-
-    // Create JWT payload
-    const payload = {
-      id: user.id,
-    };
-
-    // Sign JWT token
+    const payload = { id: user.id };
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }, // Token expires in 1 hour
+      { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
         res.json({
-           token,
-           user: { // Send back some user info (excluding password)
-            id: user.id,
-            username: user.username,
-            email: user.email
-          }
-         });
+          token,
+          user: { id: user.id, username: user.username, email: user.email },
+        });
       }
     );
   } catch (err) {
-    console.error('Login Error:', err.message);
-    res.status(500).send('Server error during login');
+    console.error("Login Error:", err.message, err.stack);
+    res.status(500).send("Server error during login");
   }
 };
 
@@ -117,17 +84,9 @@ const loginUser = async (req, res) => {
 // @route   GET /api/auth/me
 // @access  Private (requires token)
 const getMe = async (req, res) => {
-    // req.user is attached by the protect middleware
-    // We already fetched the user in the middleware, excluding the password
-    if (!req.user) {
-         return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(200).json(req.user);
+  if (!req.user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json(req.user);
 };
-
-
-module.exports = {
-  registerUser,
-  loginUser,
-  getMe,
-};
+module.exports = { registerUser, loginUser, getMe };

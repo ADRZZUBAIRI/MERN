@@ -1,15 +1,13 @@
-const express = require('express');
-const {
-  getBooks,
-  getBookById,
-  createBook,
-  updateBook,
-  deleteBook
-} = require('../controllers/bookController');
-const { protect } = require('../middleware/authMiddleware');
+// File: backend/routes/books.js
+const express = require("express");
+const bookCtrl = require("../controllers/bookController"); // Use a different alias
+const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.use(protect);
-router.route('/').get(getBooks).post(createBook);
-router.route('/:id').get(getBookById).put(updateBook).delete(deleteBook);
+router.route("/").get(bookCtrl.getBooks).post(bookCtrl.createBook);
+router
+  .route("/:id")
+  .get(bookCtrl.getBookById)
+  .put(bookCtrl.updateBook)
+  .delete(bookCtrl.deleteBook);
 module.exports = router;
-
